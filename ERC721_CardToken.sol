@@ -46,12 +46,21 @@ contract ERC721 {
     struct cardData
     {
         uint256 cardQuality;
+        
         uint256 slot1Id;
         uint256 slot1Quality;
+        
         uint256 slot2Id;
         uint256 slot2Quality;
+        
         uint256 slot3Id;
         uint256 slot3Quality;
+    }
+    
+    struct offer
+    {
+        address offerer; // Who offers to buy the NFT
+        uint256 value;   // The price (in WEI)
     }
 
     // Token name
@@ -62,15 +71,18 @@ contract ERC721 {
     
     // Last created ID of a token (needed to prevent ID overlapping)
     //uint256 public _last_id = 0;
+    
+    // Mapping from token ID to card info
+    mapping (uint256 => cardData) public _cardData;
+    
+    // Mapping from token ID to Offers to buy cards
+    mapping (uint256 => offer) public _offers;
 
     // Mapping from token ID to owner address
     mapping (uint256 => address) public _owners;
     
     // Mapping from address to possibility of token creation
     mapping (address => bool) public _tokenCreators;
-    
-    // Mapping from token ID to card info
-    mapping (uint256 => cardData) public _cardData;
 
     // Mapping owner address to token count
     mapping (address => uint256) public _balances;
@@ -80,6 +92,19 @@ contract ERC721 {
 
     // Mapping from owner to operator approvals
     mapping (address => mapping (address => bool)) public _operatorApprovals;
+    
+    function makeOffer(uint256 tokenId) public payable
+    {
+        // First check whether there is another offer with lower value
+        
+        // Then send the value back to the creator of the previous offer if it exists
+        
+        // Then check whether the card is configured for sale
+        
+        // Match bid and ask if there is the possibility
+        
+        // Place the offer otherwise, claim the funds as a collateral
+    }
     
     function setTokenCreator(address _who, bool _allowed_creation) public only_contract_owner
     {
