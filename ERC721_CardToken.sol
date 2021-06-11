@@ -1,4 +1,16 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
+
+/**
+import "./IERC721.sol";
+import "./IERC721Receiver.sol";
+import "./extensions/IERC721Metadata.sol";
+import "../../utils/Address.sol";
+import "../../utils/Context.sol";
+import "../../utils/Strings.sol";
+import "../../utils/introspection/ERC165.sol";
+*/
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -86,16 +98,21 @@ contract ERC721 {
         _tokenCreators[_who] = _allowed_creation;
     }
     
-    function getCardData(uint256 tokenId) public view returns (cardData memory)
-    {
-        return _cardData[tokenId];
-    }
-    
-    function createNFT(uint256 tokenId, address owner, cardData calldata newData) public only_token_creator
+    function createCardNFT(uint256 tokenId, address owner, cardData calldata newData) public only_token_creator
     {
         require(!_exists(tokenId), "NFT with this ID already exists");
         _mint(owner, tokenId);
         _cardData[tokenId] = newData;
+    }
+    
+    function modifyCardData(uint256 tokenId, cardData calldata newData) public only_token_creator
+    {
+        _cardData[tokenId] = newData;
+    } 
+    
+    function getCardData(uint256 tokenId) public view returns (cardData memory)
+    {
+        return _cardData[tokenId];
     }
     
     /**
