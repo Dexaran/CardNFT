@@ -343,6 +343,12 @@ contract ERC721 {
 
         emit Transfer(address(0), to, tokenId);
     }
+    
+    function burn(uint256 tokenId) public
+    {
+        require(msg.sender == ownerOf(tokenId), "Only owner can burn the token");
+        _burn(tokenId);
+    }
 
     /**
      * @dev Destroys `tokenId`.
